@@ -1,19 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Core.Interface;
 using Core.Business;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Infraestructure;
+
 
 namespace Api
 {
@@ -33,7 +28,15 @@ namespace Api
             services.AddSwaggerGen(options => {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Weero", Version = "v1" });
             });
-            services.AddScoped<IUser, User>();
+            //TODO: Depending on environmentVariable use datacontext
+            /* if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"){
+                services.AddDbContext<MyDatabaseContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                
+            } */
+            services.AddDbContext<DbContextBase>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Context")));
+            services.AddScoped<IUserBI, UserBI>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
