@@ -8,6 +8,8 @@ using Core.Business;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Infraestructure;
+using Infraestructure.Interface;
+using Infraestructure.Repository;
 
 
 namespace Api
@@ -36,7 +38,14 @@ namespace Api
             } */
             services.AddDbContext<DbContextBase>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Context")));
+            
+            #region BI
             services.AddScoped<IUserBI, UserBI>();
+            #endregion
+
+            #region Repository
+            services.AddScoped<IUserRepository, UserRepository>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

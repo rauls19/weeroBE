@@ -26,17 +26,19 @@ namespace Api.Controllers
         }
         [HttpPost]
         public async Task<ResponseDto> LoginUser(UserDto request){
+            ResponseDto response = new ResponseDto();
             #TODO Error
             if(request.Phonenumber == 0 || string.IsNullOrEmpty(request.Password)){
+                response.Code = (int)CodesResponse.Unauthorized;
             }
-            ResponseDto response = new ResponseDto();
             try{
+
                 response.Code = (int)CodesResponse.Ok;
             }catch(){
 
                 response.Code = (int)CodesResponse.InternalError;
             }
-        }
+        }/*
         [HttpPost]
         public async Task<ResponseDto> SignUp(UserDto request){
 
@@ -51,6 +53,6 @@ namespace Api.Controllers
         public async Task<ResponseDto> UpdateProfile(UserDto request){
 
             ResponseDto response = new ResponseDto();
-        }
+        }*/
     }
 }
