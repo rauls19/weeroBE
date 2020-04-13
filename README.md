@@ -1,8 +1,6 @@
 # weeroBE
 
 ## For developers
-
-
 - install dotnet 3.1 [[Reference](https://dotnet.microsoft.com/download/dotnet-core/3.1)]
 ### Local
 - install UI for managing sql (Dbeavear, mysql, ...)
@@ -17,7 +15,7 @@
 
 ## Test on Local
 
-1- Install XAMPP or LAMPP (Depending on OS)
-2- Use XAMPP or LAMPP to create a localhost sql service
-3- Go to root of the project and open a terminal
-4- Use dotnet run to execute the project [[Reference](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)]
+- Install XAMPP or LAMPP (Depending on OS)
+- Use XAMPP or LAMPP to create a localhost sql service
+- Go to root of the project and open a terminal
+- Use dotnet run to execute the project [[Reference](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)]
