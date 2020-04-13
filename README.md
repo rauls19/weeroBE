@@ -15,7 +15,7 @@
 
 ## For testers
 
-### Test on Local
+## Test on Local
 
 1- Install XAMPP or LAMPP (Depending on OS)
 2- Use XAMPP or LAMPP to create a localhost sql service
