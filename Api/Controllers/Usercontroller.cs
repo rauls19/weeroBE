@@ -22,22 +22,25 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ResponseDto> GetUser(UserDto request)
         {
-            return await _user.Test();
+            ResponseDto response = new ResponseDto();
+            response.Result = await _user.Test();
+            return response;
         }
         [HttpPost]
         public async Task<ResponseDto> LoginUser(UserDto request){
             ResponseDto response = new ResponseDto();
-            #TODO Error
+            //#TODO Error
             if(request.Phonenumber == 0 || string.IsNullOrEmpty(request.Password)){
                 response.Code = (int)CodesResponse.Unauthorized;
             }
             try{
 
                 response.Code = (int)CodesResponse.Ok;
-            }catch(){
+            }catch(Exception e){
 
                 response.Code = (int)CodesResponse.InternalError;
             }
+            return response;
         }/*
         [HttpPost]
         public async Task<ResponseDto> SignUp(UserDto request){

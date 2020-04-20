@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Infraestructure;
 using Infraestructure.Interface;
 using Infraestructure.Repository;
-
+using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace Api
 {
@@ -26,6 +27,8 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddOptions();
             services.AddControllers();
             services.AddSwaggerGen(options => {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Weero", Version = "v1" });
@@ -36,15 +39,19 @@ namespace Api
                     options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
                 
             } */
-            services.AddDbContext<DbContextBase>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Context")));
-            
+            var f = Configuration.GetConnectionString("Context");
+            //TODO: Configuration is not working if it is loaded from file
+            services.AddScoped<IDbConnection>(db => 
+                new SqlConnection("Server=localhost;Database=postgres;User Id=postgres;Password=raul;"));
+
             #region BI
-            services.AddScoped<IUserBI, UserBI>();
+            //services.AddScoped<IUserBI, UserBI>();
+            services.AddScoped<IDiscoBI, DiscoBI>();
             #endregion
 
             #region Repository
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDiscoRespository, DiscoRepository>();
             #endregion
         }
 

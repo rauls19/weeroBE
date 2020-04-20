@@ -6,7 +6,7 @@ namespace Infraestructure.Entity
     {
         public string Name{ get; set; }
         public string Location{ get; set; }
-        //TODO: I don't know what the hell is the logo's type
+        //TODO: I don't know what the hell the logo's type is ...
         public string Logo{ get; set; }
     }
 }

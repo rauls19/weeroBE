@@ -4,9 +4,8 @@ using Core.Model;
 
 namespace Core.Interface
 {
-    public interface IUserBI
+    public interface IDiscoBI
     {
-        Task<string> Test();
-        Task<UserDto> LoginUser(int phone, string pass);
+        Task<List<DiscoDto>> GetListDisco(int maxresults, int offset);
     }
 }
