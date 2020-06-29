@@ -13,6 +13,7 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class Usercontroller : ControllerBase
     {
+        /*
         private readonly IUserBI user;
 
         public Usercontroller(IUserBI user)
@@ -44,7 +45,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         public async Task<ResponseDto> UpdateDisco(long requestId, string requestuser){
-            ResponseDto response = new ResponseDto();
+            ObjectResult response;
             if(request.Phonenumber == 0 || string.IsNullOrEmpty(request.Password)){
                 response.Code = (int)CodesResponse.Unauthorized;
                 return response;
@@ -60,17 +61,14 @@ namespace Api.Controllers
         /*
         [HttpPost]
         public async Task<ResponseDto> SignUp(UserDto request){
-
             ResponseDto response = new ResponseDto();
         }
         [HttpPost]
         public async Task<ResponseDto> UpdatePhoto(UserDto request){
-
             ResponseDto response = new ResponseDto();
         }
         [HttpPost]
         public async Task<ResponseDto> UpdateProfile(UserDto request){
-
             ResponseDto response = new ResponseDto();
         }*/
     }

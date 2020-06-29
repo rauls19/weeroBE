@@ -12,20 +12,20 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class Discocontroller : ControllerBase
+    public class Matchcontroller : ControllerBase
     {
-        private readonly IDiscoBI disco;
+        private readonly IMatchBI matcher;
 
-        public Discocontroller(IDiscoBI disco)
+        public Matchcontroller(IMatchBI matcher)
         {
-            this.disco = disco;
+            this.matcher = matcher;
         }
         [HttpPost]
-        public async Task<IActionResult> GetListDisco(int maxresults, int offset){
+        public async Task<IActionResult> GetListSwap(int userid, int interested, char genre, int discoid, int offset){
             ObjectResult response;
             try{
-                var discos = await disco.GetListDisco(maxresults, offset);
-                response = new ObjectResult(discos);
+                var matches = await matcher.GetListSwap(userid, interested, genre, discoid, offset);
+                response = new ObjectResult(matches);
                 response.StatusCode = (int)CodesResponse.Ok;
             }catch(Exception e){
                 response = new ObjectResult(e.Message);

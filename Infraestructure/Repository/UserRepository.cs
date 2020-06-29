@@ -16,8 +16,9 @@ namespace Infraestructure.Repository
         }
         public async Task<ICollection<UserEntity>> Login(int number, string password)
         {
-            var user = context.Set<UserEntity>().FromSqlRaw("").ToListAsync();
-            return await user;
+            //var user = context.Set<UserEntity>().FromSqlRaw("").ToListAsync();
+            //return await user;
+            return null;
         }
         public async Task UpdatePartyToGo(int id, string hashid){
             Task.Run(() => {

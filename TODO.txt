@@ -1,17 +1,21 @@
+ERROR IN USERCONTOLLER, DOWNLOAD IT AGAIN AND FIX IT
+
 #TODO LIST ideas
 - Api/Controllers/Discocontroller/GetListDisco
 I am going to reply a list ordered by people who went there the previous week
 Create a table with the history information: Name(disco) Count(people who said will assist to) Week (of year)
 We will able to predict the people who will assist to a disco in a future (aplying simple Linear Regression)
 - SQL
-two tables, matches and historicalLikes(change name)
+two tables, matches and Likes
 matches is the table to store the match of a user
-historicalLikes is the table to store the like
+Likes is the table to store the like
+Unmatch is the table to store the unmatches
+Create stored procedure to remove the unmatch from the Likes
 
 #TODO LIST
 
 Interesting for applying: threads with multiply queries, doesn't block the system
-var accountTask = Task.Run(async () => Console.WriteLine(await GetAccounts()));
+    var accountTask = Task.Run(async () => Console.WriteLine(await GetAccounts()));
     var depositsTask = Task.Run(async () => Console.WriteLine(await GetDeposits()));
 
     Task.WhenAll(accountTask, depositsTask).Wait();

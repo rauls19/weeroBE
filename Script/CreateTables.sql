@@ -1,18 +1,5 @@
 
 --Discos (I will save the Logo's path instead of bytea, not yet)
-CREATE TABLE Discos (
-    Id bigserial,
-    Name varchar(255),
-    Location varchar(255),
-    Logo bytea
-);
--- MYsql
-CREATE TABLE Discos (
-    Id bigint NOT NULL AUTO_INCREMENT primary key,
-    Name varchar(255),
-    Location varchar(255),
-    Logo blob
-);
 --Dummy
 --INSERT INTO public.discos
 --("name", "location", logo)
@@ -92,15 +79,15 @@ INSERT INTO public.discos ("name", "location", Street, City) VALUES('Up&Down','4
 
 SELECT *
 FROM discos
-limit 5 offset 1;
+limit 5 offset 0;
 
 
 drop table matches;
 
 CREATE TABLE Matches (
     Id bigserial,
-    usernameOrigin varchar(255),
-    usernameMatch varchar(255)
+    userOrigin varchar(255),
+    userMatch varchar(255)
 );
 
 drop table users;
@@ -173,11 +160,59 @@ INSERT INTO public.users ("name", surname, birthday, email, "password", interest
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre) VALUES('Mireia','Escobar','16/06/1990','mireiaescobar@gmail.com','mireiaescobar',1,'41.395974, 2.151622','Yo no soy mala, es que me han dibujado as¡','648392039','F');
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre) VALUES('Marc','Esquirolazo','19/09/1990','marcesquirolazo@gmail.com','marcesquirolazo',0,'41.395974, 2.151622','Hoy es el primer d¡a del resto de mi vida. Odio tinder.','639485069','M');
 
+--Women interested in men
+select * 
+from users u, likes lik, matches mat
+where u.id != 1 and u.genre = 'M' and u.interested = 1 and u.disco = 1
+limit 20 offset 5;
 
---drop table genres;
+--Men interested in women
+select * 
+from users u 
+where u.genre = 'F' and u.interested = 0 and u.disco = 1;
 
---create table genres (
-	--id bigserial,
-	--name varchar(50)
---);
+--Men interested in men
+select * 
+from users u 
+where u.genre = 'M' and u.interested = 0 and u.disco = 1;
+
+--Woman interested in woman
+select * 
+from users u 
+where u.genre = 'F' and u.interested = 1 and u.disco = 1;
+
+--Men interested in both
+select * 
+from users u 
+where u.genre = 'M' and u.interested = 0 and u.disco = 1
+union 
+select *
+from users u2 
+where u2.genre = 'F' and u2.interested = 0 and u2.disco = 1
+union
+select *
+from users u3
+where u3.interested = 2 and u3.disco = 1;
+
+--Woman interested in both
+select * 
+from users u 
+where u.genre = 'M' and u.interested = 1 and u.disco = 1
+union 
+select *
+from users u2 
+where u2.genre = 'F' and u2.interested = 1 and u2.disco = 1
+union
+select *
+from users u3
+where u3.interested = 2 and u3.disco = 1;
+
+dop table likes
+
+CREATE TABLE likes (
+    id      	bigserial,
+    userOrigin	bigint,
+    userLike	bigint
+);
+
 
