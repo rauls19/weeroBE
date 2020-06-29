@@ -27,5 +27,8 @@ namespace Core.Business
 
             return user.ToList().SingleOrDefault().EntityDto();
         }
+        public async Task UpdatePartyToGo(int id, string hashid){
+            await repository.UpdatePartyToGo(id, hashid);
+        }
     }
 }

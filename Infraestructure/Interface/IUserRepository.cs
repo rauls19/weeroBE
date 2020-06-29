@@ -8,5 +8,6 @@ namespace Infraestructure.Interface
     public interface IUserRepository
     {
         Task<ICollection<UserEntity>> Login(int number, string password);
+        Task UpdatePartyToGo(int id, string hashid);
     }
 }

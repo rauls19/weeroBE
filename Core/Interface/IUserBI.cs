@@ -8,5 +8,6 @@ namespace Core.Interface
     {
         Task<string> Test();
         Task<UserDto> LoginUser(int phone, string pass);
+        Task UpdatePartyToGo(int id, string hashid);
     }
 }

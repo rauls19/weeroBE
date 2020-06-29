@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Infraestructure.Interface;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Infraestructure.Entity;
 using System.Data;
-using Microsoft.Data.SqlClient;
 
 namespace Infraestructure.Repository
 {
@@ -18,28 +16,24 @@ namespace Infraestructure.Repository
         }
         public async Task<ICollection<DiscoEntity>> GetDisco(int maxresults, int offset)
         {
-            using (SqlConnection con = new SqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=raul;"))
-            {
-                con.Open();
-                string query = @"SELECT id, ""name"", ""location"", logo FROM discos limit "+maxresults+ " offset "+offset;
-                SqlCommand cmd = new SqlCommand(query, con);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine(reader["Title"]);
-                }
-            }
-            /*string query = @"SELECT id, ""name"", ""location"", logo FROM discos limit "+maxresults+ " offset "+offset;
+            //TODO try catch
+            List<DiscoEntity> disc = new List<DiscoEntity>();
+            string query = @"SELECT id, ""name"", ""location"", logo, Street, City FROM discos limit "+maxresults+ " offset "+offset;
             context.Open();
-            var f = context.CreateCommand();
-            f.CommandText = query;
-            var reader = f.ExecuteReader();
+            var command = context.CreateCommand();
+            command.CommandText = query;
+            var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                System.Diagnostics.Debug.WriteLine(String.Format("{0}", reader[0]));
-            }*/
-            //Console.WriteLine("Discos rep: "+discos.FirstOrDefaultAsyn());
-            return null;
+                disc.Add(new DiscoEntity{
+                    Name = reader["name"].ToString(),
+                    Location = reader["location"].ToString(),
+                    Street = reader["Street"].ToString(),
+                    City = reader["City"].ToString()
+                });
+            }
+            context.Close();
+            return disc;
         }
     }
 }

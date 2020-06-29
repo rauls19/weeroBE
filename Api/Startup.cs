@@ -12,6 +12,7 @@ using Infraestructure.Interface;
 using Infraestructure.Repository;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace Api
 {
@@ -42,7 +43,7 @@ namespace Api
             var f = Configuration.GetConnectionString("Context");
             //TODO: Configuration is not working if it is loaded from file
             services.AddScoped<IDbConnection>(db => 
-                new SqlConnection("Server=localhost;Database=postgres;User Id=postgres;Password=raul;"));
+                new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=raul;Pooling=true;"));
 
             #region BI
             //services.AddScoped<IUserBI, UserBI>();

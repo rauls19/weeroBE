@@ -27,7 +27,9 @@ namespace Core.Mapper
             {
                 disclist.Add(new DiscoDto(){
                     position = ent.Location,
-                    Name = ent.Name
+                    Name = ent.Name,
+                    Street = ent.Street,
+                    City = ent.City
                 });
             }
             return disclist;

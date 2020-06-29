@@ -13,17 +13,17 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class Usercontroller : ControllerBase
     {
-        private readonly IUserBI _user;
+        private readonly IUserBI user;
 
         public Usercontroller(IUserBI user)
         {
-            _user = user;
+            this.user = user;
         }
         [HttpGet]
         public async Task<ResponseDto> GetUser(UserDto request)
         {
             ResponseDto response = new ResponseDto();
-            response.Result = await _user.Test();
+            response.Result = await user.Test();
             return response;
         }
         [HttpPost]
@@ -41,7 +41,23 @@ namespace Api.Controllers
                 response.Code = (int)CodesResponse.InternalError;
             }
             return response;
-        }/*
+        }
+        [HttpPost]
+        public async Task<ResponseDto> UpdateDisco(long requestId, string requestuser){
+            ResponseDto response = new ResponseDto();
+            if(request.Phonenumber == 0 || string.IsNullOrEmpty(request.Password)){
+                response.Code = (int)CodesResponse.Unauthorized;
+                return response;
+            }
+            try{
+                await user.UpdatePartyToGo(requestId, requestuser);
+                response.Code = (int)CodesResponse.Ok;
+            }catch(Exception e){
+
+            }
+            return response;
+        }
+        /*
         [HttpPost]
         public async Task<ResponseDto> SignUp(UserDto request){
 

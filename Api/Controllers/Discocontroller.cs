@@ -22,13 +22,9 @@ namespace Api.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> GetListDisco(int maxresults, int offset){
-            Debug.WriteLine("Hello");
             ObjectResult response;
-            //#TODO Error
             try{
-                Debug.WriteLine("Marresult: "+maxresults+" offset: "+offset);
                 var discos = await disco.GetListDisco(maxresults, offset);
-                Debug.WriteLine("1 Discos: "+ discos[0]);
                 response = new ObjectResult(discos);
                 response.StatusCode = (int)CodesResponse.Ok;
             }catch(Exception e){
@@ -37,5 +33,7 @@ namespace Api.Controllers
             }
             return response;
         }
+
+        
     }
 }
