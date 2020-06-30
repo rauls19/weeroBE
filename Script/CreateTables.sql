@@ -85,9 +85,9 @@ limit 5 offset 0;
 drop table matches;
 
 CREATE TABLE Matches (
-    Id bigserial,
-    userOrigin varchar(255),
-    userMatch varchar(255)
+    id      	bigserial,
+    userOrigin	bigint,
+    userLike	bigint
 );
 
 drop table users;
@@ -160,11 +160,15 @@ INSERT INTO public.users ("name", surname, birthday, email, "password", interest
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre) VALUES('Mireia','Escobar','16/06/1990','mireiaescobar@gmail.com','mireiaescobar',1,'41.395974, 2.151622','Yo no soy mala, es que me han dibujado as¡','648392039','F');
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre) VALUES('Marc','Esquirolazo','19/09/1990','marcesquirolazo@gmail.com','marcesquirolazo',0,'41.395974, 2.151622','Hoy es el primer d¡a del resto de mi vida. Odio tinder.','639485069','M');
 
+select *
+from users u 
+where u.genre = 'F' and u.interested = 0;
+
 --Women interested in men
 select * 
-from users u, likes lik, matches mat
-where u.id != 1 and u.genre = 'M' and u.interested = 1 and u.disco = 1
-limit 20 offset 5;
+from users u
+where  u.genre = 'M' and u.interested = 1 and u.disco = 1;
+--limit 20 offset 5;
 
 --Men interested in women
 select * 
@@ -207,12 +211,51 @@ select *
 from users u3
 where u3.interested = 2 and u3.disco = 1;
 
-dop table likes
+drop table likes
 
 CREATE TABLE likes (
     id      	bigserial,
     userOrigin	bigint,
     userLike	bigint
 );
+insert into likes (userOrigin, userLike) values (2, 5);
+insert into likes (userOrigin, userLike) values (2, 7);
+insert into likes (userOrigin, userLike) values (2, 8);
+insert into likes (userOrigin, userLike) values (2, 11);
+insert into likes (userOrigin, userLike) values (2, 13);
+insert into likes (userOrigin, userLike) values (2, 35);
+insert into likes (userOrigin, userLike) values (12, 36);
 
+select u.id , u."name" , u.surname
+from users u left join likes l on u.id = l.userLike 
+where l.userLike is null and u.id != 2 and 
+		u.genre = 'M' and u.interested = 1;
 
+select u.id , u."name" , u.surname
+from users u 
+where u.id != 2 and u.genre = 'M' and u.interested = 1
+
+select *
+from likes l 
+
+select *
+from users u 
+where u.genre ='F' and u.interested =0
+
+select l.userLike
+from likes l 
+where l.userOrigin = 2;
+
+--Query to get the list of possible matches
+select * 
+from users u 
+where u.id != 2 and u.genre = 'M' and u.interested = 1 and u.disco = 1
+		and u.id not in (
+			select l.userLike
+			from likes l 
+			where l.userOrigin = 2
+			union 
+			select m.userlike 
+			from matches m
+			where m.userorigin =2
+		);
