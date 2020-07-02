@@ -1,21 +1,4 @@
-
---Discos (I will save the Logo's path instead of bytea, not yet)
---Dummy
---INSERT INTO public.discos
---("name", "location", logo)
---VALUES('Pacha', '41.385933, 2.197039', null);
-
-drop table discos;
-
-CREATE TABLE Discos (
-    Id bigserial,
-    Name varchar(255),
-    Location varchar(255),
-    Street varchar(255),
-    City varchar(255),
-    Logo bytea
-);
-
+--Discos
 INSERT INTO public.discos ("name", "location", Street, City) VALUES('Sala Apolo','41.37438 2.169588','Nou de la Rambla, 11 Barcelona', 'Barcelona');
 INSERT INTO public.discos ("name", "location", Street, City) VALUES('Astoria','41.39394 2.153234','de París, 19 Barcelona', 'Barcelona');
 INSERT INTO public.discos ("name", "location", Street, City) VALUES('Atik Electronik','41.37552 2.148344','Plaza de España,  Barcelona', 'Barcelona');
@@ -76,39 +59,7 @@ INSERT INTO public.discos ("name", "location", Street, City) VALUES('Wolf','41.3
 INSERT INTO public.discos ("name", "location", Street, City) VALUES('Soho','41.39537 2.149882','Aribau, 19 Barcelona', 'Barcelona');
 INSERT INTO public.discos ("name", "location", Street, City) VALUES('Up&Down','41.38131 2.114330','Avenida Dr. Marañón, 1 Barcelona', 'Barcelona');
 
-
-SELECT *
-FROM discos
-limit 5 offset 0;
-
-
-drop table matches;
-
-CREATE TABLE Matches (
-    id      	bigserial,
-    userOrigin	bigint,
-    userLike	bigint
-);
-
-drop table users;
--- Define all properties
-CREATE TABLE users (
-    id          bigserial,
-    hashid      varchar(300),
-    name        varchar(50),
-    surname     varchar(150),
-    birthday    date,
-	email       varchar(50),
-    password    varchar(255),
-	Age         integer,
-	Interested  int,
-	Location    varchar(255),
-	Description varchar(255),
-	Mobilephone int unique,
-	disco 		bigint,
-	genre		varchar(1)
-);
-
+--Users
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre, disco) VALUES('Carlos','S nchez','20/10/1992','carlossanchez@gmail.com','carlossanchez',2,'41.413052, 2.182326','Estudiante UPF Para vivir m s tiempo tenemos que envejecer.','639253745','M', 1);
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre, disco) VALUES('Laura ','Sans','15/05/1995','laurasans@gmail.com','laurasans',0,'41.398002, 2.150066','Busco un chico atento, no ido m s...Hay que mirar m s all  de lo que ves.','694837283','F', 1);
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre, disco) VALUES('Patri','Bonhome','02/03/1999','patribonhome@gmail.com','patribonhome',1,'41.398002, 2.150066','Me gusta el techno. Tu cuerpo escucha todo lo que dice tu mente. S‚ positiva.','629102968','F', 1);
@@ -160,64 +111,7 @@ INSERT INTO public.users ("name", surname, birthday, email, "password", interest
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre, disco) VALUES('Mireia','Escobar','16/06/1990','mireiaescobar@gmail.com','mireiaescobar',1,'41.395974, 2.151622','Yo no soy mala, es que me han dibujado as¡','648392039','F', 1);
 INSERT INTO public.users ("name", surname, birthday, email, "password", interested, "location", description, mobilephone, genre, disco) VALUES('Marc','Esquirolazo','19/09/1990','marcesquirolazo@gmail.com','marcesquirolazo',0,'41.395974, 2.151622','Hoy es el primer d¡a del resto de mi vida. Odio tinder.','639485069','M', 1);
 
-select *
-from users u 
-where u.genre = 'F' and u.interested = 0;
-
---Women interested in men
-select * 
-from users u
-where  u.genre = 'M' and u.interested = 1 and u.disco = 1;
---limit 20 offset 5;
-
---Men interested in women
-select * 
-from users u 
-where u.genre = 'F' and u.interested = 0 and u.disco = 1;
-
---Men interested in men
-select * 
-from users u 
-where u.genre = 'M' and u.interested = 0 and u.disco = 1;
-
---Woman interested in woman
-select * 
-from users u 
-where u.genre = 'F' and u.interested = 1 and u.disco = 1;
-
---Men interested in both
-select * 
-from users u 
-where u.genre = 'M' and u.interested = 0 and u.disco = 1
-union 
-select *
-from users u2 
-where u2.genre = 'F' and u2.interested = 0 and u2.disco = 1
-union
-select *
-from users u3
-where u3.interested = 2 and u3.disco = 1;
-
---Woman interested in both
-select * 
-from users u 
-where u.genre = 'M' and u.interested = 1 and u.disco = 1
-union 
-select *
-from users u2 
-where u2.genre = 'F' and u2.interested = 1 and u2.disco = 1
-union
-select *
-from users u3
-where u3.interested = 2 and u3.disco = 1;
-
-drop table likes;
-
-CREATE TABLE likes (
-    id      	bigserial,
-    userOrigin	bigint,
-    userLike	bigint
-);
+--Likes
 insert into likes (userOrigin, userLike) values (2, 5);
 insert into likes (userOrigin, userLike) values (2, 7);
 insert into likes (userOrigin, userLike) values (2, 8);
@@ -225,37 +119,3 @@ insert into likes (userOrigin, userLike) values (2, 11);
 insert into likes (userOrigin, userLike) values (2, 13);
 insert into likes (userOrigin, userLike) values (2, 35);
 insert into likes (userOrigin, userLike) values (12, 36);
-
-select u.id , u."name" , u.surname
-from users u left join likes l on u.id = l.userLike 
-where l.userLike is null and u.id != 2 and 
-		u.genre = 'M' and u.interested = 1;
-
-select u.id , u."name" , u.surname
-from users u 
-where u.id != 2 and u.genre = 'M' and u.interested = 1;
-
-select *
-from likes l;
-
-select *
-from users u 
-where u.genre ='F' and u.interested =0;
-
-select l.userLike
-from likes l 
-where l.userOrigin = 2;
-
---Query to get the list of possible matches
-select * 
-from users u 
-where u.id != 2 and u.genre = 'M' and u.interested = 1 and u.disco = 1
-		and u.id not in (
-			select l.userLike
-			from likes l 
-			where l.userOrigin = 2
-			union 
-			select m.userlike 
-			from matches m
-			where m.userorigin =2
-		);

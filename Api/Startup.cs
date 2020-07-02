@@ -43,7 +43,7 @@ namespace Api
             var f = Configuration.GetConnectionString("Context");
             //TODO: Configuration is not working if it is loaded from file
             services.AddScoped<IDbConnection>(db => 
-                new NpgsqlConnection("Server=localhost;Database=postgres;Uid=manager;Password=holahola19;Pooling=true;"));
+                new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=holahola19;Pooling=true;"));
 
             #region BI
             //services.AddScoped<IUserBI, UserBI>();
