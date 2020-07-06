@@ -4,13 +4,14 @@ using Infraestructure.Interface;
 using System.Threading.Tasks;
 using Infraestructure.Entity;
 using System.Data;
+using System.Data.Common;
 
 namespace Infraestructure.Repository
 {
     public class DiscoRepository : IDiscoRespository
     {
-        private readonly IDbConnection context;
-        public DiscoRepository(IDbConnection context)
+        private readonly DbConnection context;
+        public DiscoRepository(DbConnection context)
         {
             this.context = context;
         }

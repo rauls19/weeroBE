@@ -119,3 +119,6 @@ insert into likes (userOrigin, userLike) values (2, 11);
 insert into likes (userOrigin, userLike) values (2, 13);
 insert into likes (userOrigin, userLike) values (2, 35);
 insert into likes (userOrigin, userLike) values (12, 36);
+
+--Pictures
+insert into pictures (hashid, hashpic, orderpic) values ("asdfasdf", "asdfasdfs", 1);

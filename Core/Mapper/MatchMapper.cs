@@ -6,7 +6,7 @@ namespace Core.Mapper
 {
     public static class MatchMapper
     {
-        public static List<MatchEntity> DtoEntity(this DiscoDto disco)
+        public static List<MatchEntity> DtoEntity(this MatchDto disco)
         {
             if (disco == null)
             {
@@ -16,23 +16,23 @@ namespace Core.Mapper
                 
             };
         }
-        public static List<DiscoDto> EntityDto(this List<MatchEntity> entity)
+        public static List<MatchDto> EntityDto(this List<MatchEntity> entity)
         {
             if (entity == null)
             {
                 return null;
             }
-            var disclist = new List<DiscoDto>();
+            var matchlist = new List<MatchDto>();
             foreach ( var ent in entity)
             {
-                disclist.Add(new DiscoDto(){
-                    //position = ent.Location,
-                    //Name = ent.Name,
-                    //Street = ent.Street,
-                    //City = ent.City
+                matchlist.Add(new MatchDto(){
+                    Name = ent.Name,
+                    Surname = ent.Surname,
+                    Age = ent.Age,
+                    Description = ent.Description
                 });
             }
-            return disclist;
+            return matchlist;
         }
     }
 }

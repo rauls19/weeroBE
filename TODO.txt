@@ -1,5 +1,3 @@
-ERROR IN USERCONTOLLER, DOWNLOAD IT AGAIN AND FIX IT
-
 #TODO LIST ideas
 - Api/Controllers/Discocontroller/GetListDisco
 I am going to reply a list ordered by people who went there the previous week
@@ -11,8 +9,11 @@ matches is the table to store the match of a user
 Likes is the table to store the like
 Unmatch is the table to store the unmatches
 Create stored procedure to remove the unmatch from the Likes
+TODO bisexuals query
 
 #TODO LIST
+
+I am using id from database in order to get the info, I have to use hashid as an identifier and replace all idusers
 
 Interesting for applying: threads with multiply queries, doesn't block the system
     var accountTask = Task.Run(async () => Console.WriteLine(await GetAccounts()));

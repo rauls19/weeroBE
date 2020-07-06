@@ -9,5 +9,6 @@ namespace Infraestructure.Interface
     {
         Task<ICollection<UserEntity>> Login(int number, string password);
         Task UpdatePartyToGo(int id, string hashid);
+        Task UpdatePhoto(string id, int order);
     }
 }

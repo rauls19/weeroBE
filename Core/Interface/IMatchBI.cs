@@ -6,6 +6,8 @@ namespace Core.Interface
 {
     public interface IMatchBI
     {
-        Task<List<DiscoDto>> GetListSwap(int userid, int interested, char genre, int discoid, int offset);
+        Task<List<MatchDto>> GetListSwap(int userid, int interested, char genre, int discoid, int offset);
+        Task<bool> MatchedUser(int userorigin, int userlike);
+        Task UnMatchedUser(int userorigin, int userlike);
     }
 }

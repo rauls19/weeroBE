@@ -89,3 +89,9 @@ where u.id != 2 and u.genre = 'M' and u.interested = 1 and u.disco = 1
 			where m.userorigin =2
 		)
 limit 10 offset 0;
+--Insert dislikes
+INSERT INTO public.dislikes
+(userorigin, userlike)
+VALUES(0, 0);
+
+

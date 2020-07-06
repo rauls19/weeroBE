@@ -13,13 +13,20 @@ namespace Api.Controllers
     [Route("api/[controller]")]
     public class Usercontroller : ControllerBase
     {
-        /*
+        
         private readonly IUserBI user;
 
         public Usercontroller(IUserBI user)
         {
             this.user = user;
         }
+        [HttpPost]
+        [Route("PlaySwapping")]
+        public async Task Uploadphoto(Image request){
+            //or base64 però comprimit
+            user.UploadImage(request.hashid, request.order, request.image);
+        }
+        /*
         [HttpGet]
         public async Task<ResponseDto> GetUser(UserDto request)
         {
@@ -42,7 +49,7 @@ namespace Api.Controllers
                 response.Code = (int)CodesResponse.InternalError;
             }
             return response;
-        }
+        }/*
         [HttpPost]
         public async Task<ResponseDto> UpdateDisco(long requestId, string requestuser){
             ObjectResult response;

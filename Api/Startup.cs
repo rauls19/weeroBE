@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ using Infraestructure.Repository;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Npgsql;
+using Core.Model;
+
 
 namespace Api
 {
@@ -41,18 +44,19 @@ namespace Api
                 
             } */
             var f = Configuration.GetConnectionString("Context");
+            services.Configure<StorageAccount>(Configuration.GetSection("StorageAccount"));
             //TODO: Configuration is not working if it is loaded from file
-            services.AddScoped<IDbConnection>(db => 
+            services.AddScoped<DbConnection>(db => 
                 new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=holahola19;Pooling=true;"));
-
+            
             #region BI
-            //services.AddScoped<IUserBI, UserBI>();
+            services.AddScoped<IUserBI, UserBI>();
             services.AddScoped<IDiscoBI, DiscoBI>();
             services.AddScoped<IMatchBI, MatchBI>();
             #endregion
 
             #region Repository
-            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IDiscoRespository, DiscoRepository>();
             services.AddScoped<IMatchRepository, MatchRepository>();
             #endregion
