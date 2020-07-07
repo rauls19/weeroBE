@@ -7,12 +7,14 @@ using Infraestructure.Interface;
 using System.Threading.Tasks;
 using Infraestructure.Entity;
 using System.Data;
+using Microsoft.Extensions.Options;
+
 
 namespace Infraestructure.Repository
 {
     public class MatchRepository : IMatchRepository
     {
-        private readonly DbConnection context;
+        private readonly DbConnection context;        
         public MatchRepository(DbConnection context)
         {
             this.context = context;

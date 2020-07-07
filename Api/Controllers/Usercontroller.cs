@@ -10,7 +10,7 @@ using Core.Model;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/")]
     public class Usercontroller : ControllerBase
     {
         
@@ -21,7 +21,7 @@ namespace Api.Controllers
             this.user = user;
         }
         [HttpPost]
-        [Route("PlaySwapping")]
+        [Route("UploadPhoto")]
         public async Task Uploadphoto(Image request){
             //or base64 però comprimit
             user.UploadImage(request.hashid, request.order, request.image);

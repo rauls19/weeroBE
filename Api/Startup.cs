@@ -38,11 +38,10 @@ namespace Api
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Weero", Version = "v1" });
             });
             //TODO: Depending on environmentVariable use datacontext
-            /* if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"){
-                services.AddDbContext<MyDatabaseContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
-                
-            } */
+            /*if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"){
+                services.AddScoped<DbConnection>(db => 
+                    new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=holahola19;Pooling=true;"));
+            }*/
             var f = Configuration.GetConnectionString("Context");
             services.Configure<StorageAccount>(Configuration.GetSection("StorageAccount"));
             //TODO: Configuration is not working if it is loaded from file
