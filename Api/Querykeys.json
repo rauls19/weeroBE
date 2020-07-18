@@ -1,0 +1,12 @@
+{
+  "UserKey": {
+    "updatephoto": "UpdatePhoto",
+    "insertupdatephoto": "InsertUpdatePhoto"
+  },
+  "DiscoKey": {
+    "getdisco" : "GetDisco"
+  },
+  "MatchKey":{
+    
+  }
+}

@@ -19,19 +19,22 @@ namespace Infraestructure.Repository
         public async Task UploadimageBlob(int order, byte[] image)
         {
             await containerClient.CreateIfNotExistsAsync();
-            IDictionary<string, string> metadata = new Dictionary<string, string>();
-
-        // Add some metadata to the container.
-            metadata.Add("metadata", "true");
             var blobclient = containerClient.GetBlobClient(order.ToString());
-            await blobclient.SetMetadataAsync(metadata);
+            await RemoveBlobContainer(order);
             await blobclient.UploadAsync(new MemoryStream(image));      
         }
-        public async Task RemoveBlobContainer(string connectionString, string containerName, int order)
+        public async Task<> GetimageBlob(string id){
+            if(await containerClient.ExistsAsync()){
+                var f = containerClient.GetBlobClient(id);
+                Stream im;
+                var g = await f.DownloadAsync();
+            }
+        }
+        public async Task RemoveBlobContainer(int order)
         {
             await containerClient.DeleteBlobIfExistsAsync(order.ToString());
         }
-        public async Task RemoveContainer(string connectionString, string containerName)
+        public async Task RemoveContainer()
         {
             await containerClient.DeleteIfExistsAsync();
         }

@@ -1,31 +1,33 @@
 using System.Data.Common;
-using System.Text;
-using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using Infraestructure.Interface;
 using System.Threading.Tasks;
 using Infraestructure.Entity;
-using System.Data;
-using Microsoft.Extensions.Options;
+using Infraestructure.Querybuilder;
 
 
 namespace Infraestructure.Repository
 {
     public class MatchRepository : IMatchRepository
     {
-        private readonly DbConnection context;        
-        public MatchRepository(DbConnection context)
+        protected readonly DbConnection context;
+        protected readonly MatchKey matchkey;
+        protected readonly Builder builder;
+
+        public MatchRepository(DbConnection context, MatchKey matchkey, Builder builder)
         {
             this.context = context;
+            this.matchkey = matchkey;
+            this.builder = builder;
         }
-        //TODO catch errors
-        public async Task<ICollection<MatchEntity>> GetSwap(int userid, int interested, char genre, int discoid, int offset)
+        public async Task<ICollection<MatchEntity>> GetSwap(string userid, int interested, char genre, int discoid,
+                                                            int offset)
         {
             //TODO try catch
             //TODO check Likes, check matches and after get users
             List<MatchEntity> matchlist = new List<MatchEntity>();
-            string query = "";
+            string query = string.Empty;
             //Males straight
             if(genre == 'M' && interested == 1)
                 query = @"SELECT name, surname, age, description FROM users WHERE id !="+userid+" and genre = 'F' and"+
@@ -58,10 +60,10 @@ namespace Infraestructure.Repository
                 query = @"SELECT * FROM users WHERE id != "+ userid +" and  "+discoid+"limit 20 offset "+ offset;
             if(genre == 'F' && interested == 2)
                 query = @"SELECT * FROM users WHERE id != "+ userid +" and  "+discoid+"limit 20 offset "+ offset;
-            context.Open();
+            await context.OpenAsync();
             var command = context.CreateCommand();
             command.CommandText = query;
-            var reader = command.ExecuteReader();
+            var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
                 matchlist.Add(new MatchEntity{

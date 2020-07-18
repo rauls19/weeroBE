@@ -40,7 +40,7 @@ namespace Core.Business
             BlobStorageRepository blobs = new BlobStorageRepository(context.Value.ConnectionString, containerName.ToLower());
             byte [] newimage = Convert.FromBase64String(image);
             await blobs.UploadimageBlob(order, newimage);
-            //repository.UpdatePhoto(containerName.ToLower(), order);
+            await repository.UpdatePhoto(containerName.ToLower(), order);
         }
     }
 }

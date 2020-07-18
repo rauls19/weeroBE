@@ -3,27 +3,33 @@ using System.Collections.Generic;
 using Infraestructure.Interface;
 using System.Threading.Tasks;
 using Infraestructure.Entity;
+using Infraestructure.Querybuilder;
 using System.Data;
 using System.Data.Common;
 
 namespace Infraestructure.Repository
 {
     public class DiscoRepository : IDiscoRespository
-    {
-        private readonly DbConnection context;
-        public DiscoRepository(DbConnection context)
+    {        
+        protected readonly DbConnection context;
+        protected readonly DiscoKey discokey;
+        protected readonly Builder builder;
+
+        public DiscoRepository(DbConnection context, DiscoKey discokey, Builder builder)
         {
             this.context = context;
+            this.discokey = discokey;
+            this.builder = builder;
         }
-        public async Task<ICollection<DiscoEntity>> GetDisco(int maxresults, int offset)
+        public async Task<ICollection<DiscoEntity>> GetDisco(int maxresults,
+                                                             int offset)
         {
-            //TODO try catch
             List<DiscoEntity> disc = new List<DiscoEntity>();
-            string query = @"SELECT id, ""name"", ""location"", logo, Street, City FROM discos limit "+maxresults+ " offset "+offset;
-            context.Open();
+            string query = string.Format(builder.GetQuery(discokey.getdisco), maxresults, offset);
+            await context.OpenAsync();
             var command = context.CreateCommand();
             command.CommandText = query;
-            var reader = command.ExecuteReader();
+            var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
                 disc.Add(new DiscoEntity{

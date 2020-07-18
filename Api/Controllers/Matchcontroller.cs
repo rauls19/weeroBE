@@ -24,7 +24,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("GetListSwap")]
-        public async Task<IActionResult> GetListSwap(int userid, int interested, char genre, int discoid, int offset){
+        public async Task<IActionResult> GetListSwap(string userid, int interested, char genre, int discoid, int offset){
             ObjectResult response;
             try{
                 var matches = await matcher.GetListSwap(userid, interested, genre, discoid, offset);

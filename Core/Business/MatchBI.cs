@@ -6,18 +6,21 @@ using Infraestructure.Interface;
 using System.Linq;
 using Core.Mapper;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace Core.Business
 {
     public class MatchBI : IMatchBI
     {
         private readonly IMatchRepository repository;
+        private readonly IOptions<StorageAccount> context;
 
-        public MatchBI(IMatchRepository repository)
+        public MatchBI(IMatchRepository repository, IOptions<StorageAccount> context)
         {
             this.repository = repository;
+            this.context =  context;
         }
-        public async Task<List<MatchDto>> GetListSwap(int userid, int interested, char genre, int discoid, int offset){
+        public async Task<List<MatchDto>> GetListSwap(string userid, int interested, char genre, int discoid, int offset){
             //If I only have the identifier, I should get the info from UserRepository
             var match = await repository.GetSwap(userid, interested, genre, discoid, offset);
             return match.ToList().EntityDto();

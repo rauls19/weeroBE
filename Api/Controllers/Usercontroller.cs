@@ -23,8 +23,9 @@ namespace Api.Controllers
         [HttpPost]
         [Route("UploadPhoto")]
         public async Task Uploadphoto(Image request){
-            //or base64 però comprimit
-            user.UploadImage(request.hashid, request.order, request.image);
+            Guid obj = Guid.NewGuid();
+            Console.WriteLine(obj.ToString().ToLower());
+            //await user.UploadImage(request.hashid, request.order, request.image);
         }
         /*
         [HttpGet]

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Infraestructure;
 using Infraestructure.Interface;
+using Infraestructure.Querybuilder;
 using Infraestructure.Repository;
 using System.Data;
 using Microsoft.Data.SqlClient;
@@ -37,17 +40,33 @@ namespace Api
             services.AddSwaggerGen(options => {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Weero", Version = "v1" });
             });
-            //TODO: Depending on environmentVariable use datacontext
-            /*if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production"){
-                services.AddScoped<DbConnection>(db => 
-                    new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=holahola19;Pooling=true;"));
-            }*/
-            var f = Configuration.GetConnectionString("Context");
+            #region Database and Blobs initialization
             services.Configure<StorageAccount>(Configuration.GetSection("StorageAccount"));
-            //TODO: Configuration is not working if it is loaded from file
             services.AddScoped<DbConnection>(db => 
-                new NpgsqlConnection("Server=localhost;Database=postgres;Uid=postgres;Password=holahola19;Pooling=true;"));
-            
+                new NpgsqlConnection(Configuration.GetConnectionString("Context")));
+            #endregion
+
+            #region  Query Builder
+            UserKey userkey = new UserKey();
+            DiscoKey discokey = new DiscoKey();
+            MatchKey matchkey = new MatchKey();
+            Configuration.GetSection("UserKey").Bind(userkey);
+            Configuration.GetSection("DiscoKey").Bind(discokey);
+            Configuration.GetSection("MatchKey").Bind(matchkey);
+            services.AddSingleton<UserKey>(uk =>
+               userkey);
+            services.AddSingleton<DiscoKey>(dk =>
+               discokey);
+            services.AddSingleton<MatchKey>(mk =>
+               matchkey);
+            List<Query> q = new List<Query>();
+            Configuration.GetSection("Disco").Bind(q);
+            Configuration.GetSection("User").Bind(q);
+            Configuration.GetSection("Match").Bind(q);
+            services.AddSingleton<Builder>(qb =>
+                new Builder(q));
+            #endregion
+
             #region BI
             services.AddScoped<IUserBI, UserBI>();
             services.AddScoped<IDiscoBI, DiscoBI>();

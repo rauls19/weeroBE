@@ -11,7 +11,7 @@ using System.Diagnostics;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/")]
     public class Discocontroller : ControllerBase
     {
         private readonly IDiscoBI disco;
@@ -21,6 +21,7 @@ namespace Api.Controllers
             this.disco = disco;
         }
         [HttpPost]
+        [Route("GetDiscos")]
         public async Task<IActionResult> GetListDisco(int maxresults, int offset){
             ObjectResult response;
             try{

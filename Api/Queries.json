@@ -1,0 +1,21 @@
+{
+  "User": [{
+    "identifier" : "UpdatePhoto",
+    "query": "SELECT COUNT(*) FROM pictures WHERE hashid={0} orderpic={1}"
+    },
+    {
+    "identifier" : "InsertUpdatePhoto",
+    "query": "INSERT INTO pictures (hashid, orderpic) VALUES ({0},{1})"
+    }
+  ],
+  "Match": [{
+    "identifier" : "",
+    "query": ""
+    }
+  ],
+  "Disco": [{
+    "identifier" : "GetDisco",
+    "query": "SELECT id, name, location, logo, Street, City FROM discos limit {0} offset {1}"
+    }
+  ]
+}
