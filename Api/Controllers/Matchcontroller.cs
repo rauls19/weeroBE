@@ -31,10 +31,10 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("PlaySwapping")]
-        public async Task<IActionResult> PlaySwapping(int userorigin, int userlike){
+        public async Task<IActionResult> PlaySwapping(string userorigin, string userlike){
             ObjectResult response;
             try{
-                bool matched = await matcher.MatchedUser(userorigin,userlike);
+                bool matched = await matcher.MatchedUser(userorigin, userlike);
                 response = new ObjectResult(matched);
                 response.StatusCode = (int)CodesResponse.Ok;
             }catch(Exception e){
@@ -45,9 +45,9 @@ namespace Api.Controllers
         }
         [HttpPost]
         [Route("PlayUnmatch")]
-        public async Task PlayUnmatch(int userorigin, int userlike){
+        public async Task PlayUnmatch(string userorigin, string userlike){
             try{
-                //await matcher.UnMatchedUser(userorigin, userlike);
+                await matcher.UnMatchedUser(userorigin, userlike);
             }catch(Exception e){
                 //Logger
             }

@@ -12,6 +12,9 @@
   },
   "MatchKey":{
     "insertdislike" : "InsertDislike",
-    "homostraight" : "HomoStraight"
+    "getswaplist" : "GetSwapList",
+    "islike" : "IsLike",
+    "matched" : "Matched",
+    "insertlike" : "InsertLike"
   }
 }

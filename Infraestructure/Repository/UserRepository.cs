@@ -111,5 +111,34 @@ namespace Infraestructure.Repository
             }
             context.Close();
         }
+        public async Task<UserEntity> GetProfile(string hashid){
+            string query = string.Format(builder.GetQuery(userkey.getuser), hashid);
+            UserEntity user = new UserEntity();
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                var reader = await command.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    user.Id = Convert.ToInt64(reader["id"].ToString());
+                    user.Name = reader["name"].ToString();
+                    user.Surname = reader["surname"].ToString();
+                    user.Hashid = hashid;
+                    user.Description = reader["description"].ToString();
+                    user.Age = Convert.ToInt32(reader["age"]);
+                }
+                query = string.Format(builder.GetQuery(userkey.getlang), user.Id);
+                command.CommandText = query;
+                var langreader = await command.ExecuteReaderAsync();
+                List<string> lang = new List<string>();
+                while (langreader .Read()){
+                    lang.Add(langreader["lang"].ToString());
+                }
+                user.Language = lang;
+        }catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        return user;
     }
 }

@@ -64,5 +64,19 @@ namespace Api.Controllers
         public async Task Uploadphoto(Image request){
             await user.UploadImage(request.hashid, request.order, request.image);
         }
+        [HttpPost]
+        [Route("VisitProfile")]
+        public async Task<IActionResult> VisitProfile(string request){
+            ObjectResult response;
+            try{
+                var profile = await user.GetProfile(request);
+                response = new ObjectResult(profile);
+                response.StatusCode = (int)CodesResponse.Ok;
+            }catch(Exception e){
+                response = new ObjectResult(e.Message);
+                response.StatusCode = (int)CodesResponse.InternalError;
+            }
+            return response;
+        }
     }
 }

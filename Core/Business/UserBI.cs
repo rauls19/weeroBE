@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Core.Business
 {
-    public class UserBI:IUserBI
+    public class UserBI : IUserBI
     {
         private readonly IUserRepository repository;
         private readonly IOptions<StorageAccount> context;
@@ -50,6 +50,10 @@ namespace Core.Business
             byte [] newimage = Convert.FromBase64String(image);
             await blobs.UploadimageBlob(order, newimage);
             await repository.UpdatePhoto(containerName.ToLower(), order);
+        }
+        public async Task<UserProfile> GetProfile(string request){
+            var profileuser = await repository.GetProfile(request);
+            return profileuser.EntityDto();
         }
     }
 }

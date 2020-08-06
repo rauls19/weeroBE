@@ -29,7 +29,8 @@ namespace Core.Mapper
                     Name = ent.Name,
                     Surname = ent.Surname,
                     Age = ent.Age,
-                    Description = ent.Description
+                    Description = ent.Description,
+                    Identifier = ent.Identifier
                 });
             }
             return matchlist;

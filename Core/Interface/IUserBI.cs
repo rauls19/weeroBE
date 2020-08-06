@@ -11,5 +11,6 @@ namespace Core.Interface
         Task UpdatePartyToGo(int id, string hashid);
         Task UploadImage(string containerName, int order, string image);
         Task<UserDto> GetUser(string request);
+        Task<UserProfile> GetProfile(string request);
     }
 }

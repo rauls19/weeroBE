@@ -13,7 +13,7 @@ drop table likes;
 drop table pictures;
 drop table dislikes;
  
-CREATE TABLE Discos (
+CREATE TABLE discos (
     Id bigserial,
     Name varchar(255),
     Location varchar(255),
@@ -21,10 +21,10 @@ CREATE TABLE Discos (
     City varchar(255)
 );
 
-CREATE TABLE Matches (
+CREATE TABLE matches (
     id      	bigserial,
-    userOrigin	varchar(300),
-    userLike	varchar(300)
+    usermatch1	varchar(300),
+    usermatch2	varchar(300)
 );
 -- Define all properties
 CREATE TABLE users (

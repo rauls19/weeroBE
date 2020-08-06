@@ -5,7 +5,7 @@
     },
     {
       "identifier" : "InsertUpdatePhoto",
-      "query": "INSERT INTO pictures (hashid, orderpic) VALUES ({0},{1})"
+      "query": "INSERT INTO pictures (hashid, orderpic) VALUES ('{0}',{1})"
     },
     {
       "identifier" : "SignUp",
@@ -21,16 +21,28 @@
     },
     {
       "identifier" : "Login",
-      "query" : "select * from users where mobilephone = {0} and password  = '{1}'"
+      "query" : "select hashid from users where mobilephone = {0} and password  = '{1}'"
     }
   ],
   "Match": [{
       "identifier" : "InsertDislike",
-      "query": "INSERT INTO dislikes (userorigin, userlike) VALUES({0}, {1})"
+      "query": "INSERT INTO dislikes (userorigin, userlike) VALUES('{0}', '{1}')"
     },
     {
-      "identifier" : "HomoStraight",
-      "query" : "SELECT name, surname, age, description FROM users WHERE id !={0} and genre = '{1}' and interested = {2} and disco = {3} and id not in ( SELECT userLike from likes where userOrigin = {4} union select userLike from matches where userorigin= {5} union select userlike from dislikes where userorigin={6} ) limit 20 offset {7} "
+      "identifier" : "GetSwapList",
+      "query" : "SELECT name, surname, age, description, hashid FROM users WHERE id !={0} and genre = '{1}' and interested = {2} and disco = {3} and id not in ( SELECT userLike from likes where userOrigin = '{4}' union select userLike from matches where userorigin= '{5}' union select userlike from dislikes where userorigin='{6}' ) limit 20 offset {7} "
+    },
+    {
+      "identifier" : "IsLike",
+      "query" : "select count(*) from likes where userorigin = '{0}' and userlike = '{1}'"
+    },
+    {
+      "identifier" : "Matched",
+      "query" : "INSERT INTO matches (usermatch1, usermatch2) VALUES('{0}', '{1}')"
+    },
+    {
+      "identifier" : "InsertLike",
+      "query" : "INSERT INTO likes (userorigin, userlike) VALUES('{0}', '{1}')"
     }
   ],
   "Disco": [{

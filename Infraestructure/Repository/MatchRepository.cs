@@ -30,13 +30,13 @@ namespace Infraestructure.Repository
             string query = string.Empty;
             //Males straight
             if(genre == 'M' && interested == 1)
-                query = string.Format(matchkey.homostraight, userid, 'F', 0, discoid, userid, userid, userid, offset);
+                query = string.Format(matchkey.getswaplist, userid, 'F', 0, discoid, userid, userid, userid, offset);
             //Females straight
             if(genre == 'F' && interested == 0)
-                query = string.Format(matchkey.homostraight, userid, 'M', 1, discoid, userid, userid, userid, offset);
+                query = string.Format(matchkey.getswaplist, userid, 'M', 1, discoid, userid, userid, userid, offset);
             //Homosexuals
             if((genre == 'M' && interested == 0) || (genre == 'F' && interested == 1))
-                query = string.Format(matchkey.homostraight , userid, genre, interested, discoid, userid, userid, userid, offset);
+                query = string.Format(matchkey.getswaplist , userid, genre, interested, discoid, userid, userid, userid, offset);
             //TODO bisexuals
             await context.OpenAsync();
             var command = context.CreateCommand();
@@ -47,20 +47,42 @@ namespace Infraestructure.Repository
                 matchlist.Add(new MatchEntity{
                     Name = reader["name"].ToString(),
                     Surname = reader["surname"].ToString(),
-                    //Age = int.Parse(reader["age"].ToString()),
-                    Description = reader["description"].ToString()
+                    Age = Convert.ToInt32(reader["age"]),
+                    Description = reader["description"].ToString(),
+                    Identifier = reader["hashid"].ToString()
                 });
             }
             context.Close();
             return matchlist;
         }
-        public async Task<bool> MatchEvaluation(int userorigin, int userlike){
-            string query=String.Empty;
-            return false;
+        public async Task<bool> MatchEvaluation(string userorigin, string userlike){
+            string query=string.Format(builder.GetQuery(matchkey.islike), userlike, userorigin);
+            bool matched = false;
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                var count = await command.ExecuteScalarAsync();
+                if((int)count == 1){
+                    query=string.Format(builder.GetQuery(matchkey.matched), userlike, userorigin);
+                    command = context.CreateCommand();
+                    command.CommandText = query;
+                    await command.ExecuteNonQueryAsync();
+                   matched = true;
+                }else{
+                    query=string.Format(builder.GetQuery(matchkey.insertlike), userorigin, userlike);
+                    command = context.CreateCommand();
+                    command.CommandText = query;
+                    await command.ExecuteNonQueryAsync();
+                }
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+            context.Close();
+            return matched;
         }
-        public async Task UnMatch(int userorigin, int userlike){
-            string query=String.Empty;
-            query = String.Format(builder.GetQuery(matchkey.insertdislike), userorigin, userlike);
+        public async Task UnMatch(string userorigin, string userlike){
+            string query=String.Format(builder.GetQuery(matchkey.insertdislike), userorigin, userlike);
             try{
                 await context.OpenAsync();
                 var command = context.CreateCommand();

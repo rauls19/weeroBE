@@ -1,13 +1,14 @@
-using System;
+using System.Collections.Generic;
 
-namespace Infraestructure.Entity
+namespace Core.Model
 {
-    public class MatchEntity : BaseEntity
+    public class UserProfile
     {
+        public string Hashid{ get; set; }
         public string Name{ get; set; }
         public string Surname{ get; set; }
         public int Age{ get; set; }
         public string Description{ get; set; }
-        public string Identifier { get; set; }
+        public List<string> Language { get; set; } 
     }
 }
