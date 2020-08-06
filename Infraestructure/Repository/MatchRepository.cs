@@ -30,36 +30,14 @@ namespace Infraestructure.Repository
             string query = string.Empty;
             //Males straight
             if(genre == 'M' && interested == 1)
-                query = @"SELECT name, surname, age, description FROM users WHERE id !="+userid+" and genre = 'F' and"+
-                " interested = 0 and disco = "+discoid+" and id not in ( SELECT userLike from likes where userOrigin ="+userid+
-                " union "+
-                "select userLike from matches where userorigin="+userid+
-                " union "+
-                " select userlike from dislikes where userorigin="+userid+
-                ") limit 20 offset "+offset;
+                query = string.Format(matchkey.homostraight, userid, 'F', 0, discoid, userid, userid, userid, offset);
             //Females straight
             if(genre == 'F' && interested == 0)
-                query = @"SELECT name, surname, age, description FROM users WHERE id !="+userid+" and genre = 'M' and"+
-                " interested = 1 and disco = "+discoid+" and id not in ( SELECT userLike from likes where userOrigin ="+userid+
-                " union "+
-                "select userLike from matches where userorigin="+userid+
-                " union "+
-                " select userlike from dislikes where userorigin="+userid+
-                ") limit 20 offset "+offset;
+                query = string.Format(matchkey.homostraight, userid, 'M', 1, discoid, userid, userid, userid, offset);
             //Homosexuals
             if((genre == 'M' && interested == 0) || (genre == 'F' && interested == 1))
-                query = @"SELECT name, surname, age, description FROM users WHERE id !="+userid+" and genre = '"+genre+"' and"+
-                " interested = "+interested+" and disco = "+discoid+" and id not in ( SELECT userLike from likes where userOrigin ="+userid+
-                " union "+
-                "select userLike from matches where userorigin="+userid+
-                " union "+
-                " select userlike from dislikes where userorigin="+userid+
-                ") limit 20 offset "+offset;
+                query = string.Format(matchkey.homostraight , userid, genre, interested, discoid, userid, userid, userid, offset);
             //TODO bisexuals
-            if(genre == 'M' && interested == 2)
-                query = @"SELECT * FROM users WHERE id != "+ userid +" and  "+discoid+"limit 20 offset "+ offset;
-            if(genre == 'F' && interested == 2)
-                query = @"SELECT * FROM users WHERE id != "+ userid +" and  "+discoid+"limit 20 offset "+ offset;
             await context.OpenAsync();
             var command = context.CreateCommand();
             command.CommandText = query;
@@ -82,7 +60,7 @@ namespace Infraestructure.Repository
         }
         public async Task UnMatch(int userorigin, int userlike){
             string query=String.Empty;
-            query = String.Format(@"INSERT INTO dislikes (userorigin, userlike) VALUES({0}, {1})", userorigin, userlike);
+            query = String.Format(builder.GetQuery(matchkey.insertdislike), userorigin, userlike);
             try{
                 await context.OpenAsync();
                 var command = context.CreateCommand();

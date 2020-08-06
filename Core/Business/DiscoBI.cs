@@ -23,7 +23,8 @@ namespace Core.Business
         }
         public async Task<List<DiscoDto>> GetListDisco(int maxresults, int offset){
             var disco = await repository.GetDisco(maxresults, offset);
-            BlobStorageRepository blobs = new BlobStorageRepository(context.Value.ConnectionString, );
+            //BlobStorageRepository blobs = new BlobStorageRepository(context.Value.ConnectionString, );
+            //TODO get logo 
             return disco.ToList().EntityDto();
         }
     }

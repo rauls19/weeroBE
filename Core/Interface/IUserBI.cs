@@ -6,9 +6,10 @@ namespace Core.Interface
 {
     public interface IUserBI
     {
-        Task<string> Test();
-        Task<UserDto> LoginUser(int phone, string pass);
+        Task<string> SignUp(UserDto request);
+        Task<string> LoginUser(UserDto request);
         Task UpdatePartyToGo(int id, string hashid);
         Task UploadImage(string containerName, int order, string image);
+        Task<UserDto> GetUser(string request);
     }
 }

@@ -33,6 +33,7 @@ namespace Infraestructure.Repository
             while (reader.Read())
             {
                 disc.Add(new DiscoEntity{
+                    Id = Convert.ToInt64(reader["id"].ToString()),
                     Name = reader["name"].ToString(),
                     Location = reader["location"].ToString(),
                     Street = reader["Street"].ToString(),

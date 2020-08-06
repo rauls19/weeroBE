@@ -8,6 +8,8 @@ using System.Linq;
 using Core.Mapper;
 using Microsoft.Extensions.Options;
 using Infraestructure.Repository;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Core.Business
 {
@@ -21,16 +23,23 @@ namespace Core.Business
             this.repository = repository;
             this.context =  context;
         }
-        public async Task<string> Test(){
-            return "Hola";
+        public async Task<string> SignUp(UserDto request){
+            var data = Encoding.UTF8.GetBytes(request.Name+request.Surname);
+            byte[] result;
+            SHA512 shaM = new SHA512Managed();
+            result = shaM.ComputeHash(data);
+            request.Hashid = Guid.NewGuid().ToString().ToLower()+Convert.ToBase64String(result);
+            await repository.SignUp(request.DtoEntity());
+            return request.Hashid;
         }
-        public async Task<UserDto> LoginUser(int phone, string pass){
-            
-            var user = await repository.Login(phone, pass);
-            
-            if(user.Count >1) Console.WriteLine("Inconsistency DB");
-
-            return user.ToList().SingleOrDefault().EntityDto();
+        public async Task<string> LoginUser(UserDto request){
+            if(request.Phonenumber == 0 || string.IsNullOrEmpty(request.Password))
+                throw new Exception("MalFormed input");
+            return await repository.Login(request.Phonenumber, request.Password);
+        }
+        public async Task<UserDto> GetUser(string request){
+            var user = await repository.GetUser(request);
+            return user.EntityDto();
         }
         public async Task UpdatePartyToGo(int id, string hashid){
             await repository.UpdatePartyToGo(id, hashid);

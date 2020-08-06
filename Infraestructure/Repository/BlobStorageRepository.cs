@@ -23,13 +23,13 @@ namespace Infraestructure.Repository
             await RemoveBlobContainer(order);
             await blobclient.UploadAsync(new MemoryStream(image));      
         }
-        public async Task<> GetimageBlob(string id){
+        /*public async Task<> GetimageBlob(string id){
             if(await containerClient.ExistsAsync()){
                 var f = containerClient.GetBlobClient(id);
                 Stream im;
                 var g = await f.DownloadAsync();
             }
-        }
+        }*/
         public async Task RemoveBlobContainer(int order)
         {
             await containerClient.DeleteBlobIfExistsAsync(order.ToString());

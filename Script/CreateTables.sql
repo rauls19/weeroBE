@@ -18,13 +18,13 @@ CREATE TABLE Discos (
     Name varchar(255),
     Location varchar(255),
     Street varchar(255),
-    City varchar(255),
-    Logo bytea
+    City varchar(255)
 );
+
 CREATE TABLE Matches (
     id      	bigserial,
-    userOrigin	bigint,
-    userLike	bigint
+    userOrigin	varchar(300),
+    userLike	varchar(300)
 );
 -- Define all properties
 CREATE TABLE users (
@@ -35,18 +35,27 @@ CREATE TABLE users (
     birthday    date,
 	email       varchar(50),
     password    varchar(255),
-	Age         integer,
-	Interested  int,
-	Location    varchar(255),
-	Description varchar(255),
-	Mobilephone int unique,
+	age         integer,
+	interested  int  not null default 0,
+	location    varchar(255),
+	description varchar(255),
+	mobilephone int unique,
+    extension   int,
 	disco 		bigint,
 	genre		varchar(1)
 );
+
+CREATE TABLE language (
+	id		bigserial,
+	iduser	bigserial,
+	lang	varchar(100),
+	iso		varchar(10)
+);
+
 CREATE TABLE likes (
     id      	bigserial,
-    userOrigin	bigint,
-    userLike	bigint
+    userOrigin	varchar(300),
+    userLike	varchar(300)
 );
 CREATE TABLE pictures (
     id          bigserial,
@@ -55,6 +64,6 @@ CREATE TABLE pictures (
 );
 CREATE TABLE dislikes (
     id          bigserial,
-    userOrigin  bigint,
-    userLike    bigint
+    userOrigin  varchar(300),
+    userLike    varchar(300)
 );

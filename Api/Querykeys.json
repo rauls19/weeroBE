@@ -1,12 +1,17 @@
 {
   "UserKey": {
     "updatephoto": "UpdatePhoto",
-    "insertupdatephoto": "InsertUpdatePhoto"
+    "insertupdatephoto": "InsertUpdatePhoto",
+    "signup" : "SignUp",
+    "getuser" : "GetUser",
+    "getlanguages" : "GetLanguages",
+    "login" : "Login"
   },
   "DiscoKey": {
     "getdisco" : "GetDisco"
   },
   "MatchKey":{
-    
+    "insertdislike" : "InsertDislike",
+    "homostraight" : "HomoStraight"
   }
 }

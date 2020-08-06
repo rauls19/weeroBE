@@ -1,21 +1,41 @@
 {
   "User": [{
-    "identifier" : "UpdatePhoto",
-    "query": "SELECT COUNT(*) FROM pictures WHERE hashid={0} orderpic={1}"
+      "identifier" : "UpdatePhoto",
+      "query": "SELECT COUNT(*) FROM pictures WHERE hashid={0} orderpic={1}"
     },
     {
-    "identifier" : "InsertUpdatePhoto",
-    "query": "INSERT INTO pictures (hashid, orderpic) VALUES ({0},{1})"
+      "identifier" : "InsertUpdatePhoto",
+      "query": "INSERT INTO pictures (hashid, orderpic) VALUES ({0},{1})"
+    },
+    {
+      "identifier" : "SignUp",
+      "query" : "INSERT INTO users (name, surname, hashid, birthday, password, age, mobilephone, extension, genre) VALUES('{0}','{1}','{2}','{3}','{4}', extract ( year from age(timestamp '{5}')),{6}, {7},'{8}')"
+    },
+    {
+      "identifier" : "GetUser",
+      "query" : "select * from users u where hashid = '{0}'"
+    },
+    {
+      "identifier" : "GetLanguages",
+      "query" : "select * from language where iduser = {0}"
+    },
+    {
+      "identifier" : "Login",
+      "query" : "select * from users where mobilephone = {0} and password  = '{1}'"
     }
   ],
   "Match": [{
-    "identifier" : "",
-    "query": ""
+      "identifier" : "InsertDislike",
+      "query": "INSERT INTO dislikes (userorigin, userlike) VALUES({0}, {1})"
+    },
+    {
+      "identifier" : "HomoStraight",
+      "query" : "SELECT name, surname, age, description FROM users WHERE id !={0} and genre = '{1}' and interested = {2} and disco = {3} and id not in ( SELECT userLike from likes where userOrigin = {4} union select userLike from matches where userorigin= {5} union select userlike from dislikes where userorigin={6} ) limit 20 offset {7} "
     }
   ],
   "Disco": [{
-    "identifier" : "GetDisco",
-    "query": "SELECT id, name, location, logo, Street, City FROM discos limit {0} offset {1}"
+      "identifier" : "GetDisco",
+      "query": "SELECT id, name, location, Street, City FROM discos limit {0} offset {1}"
     }
   ]
 }

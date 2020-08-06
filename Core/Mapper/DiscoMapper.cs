@@ -26,10 +26,12 @@ namespace Core.Mapper
             foreach ( var ent in entity)
             {
                 disclist.Add(new DiscoDto(){
+                    identifier = ent.Id,
                     position = ent.Location,
                     Name = ent.Name,
                     Street = ent.Street,
-                    City = ent.City
+                    City = ent.City,
+                    Logo = ent.Logo
                 });
             }
             return disclist;
