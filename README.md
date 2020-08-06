@@ -15,7 +15,7 @@
 
 ## Test on Local
 
-- Install XAMPP or LAMPP (Depending on OS)
-- Use XAMPP or LAMPP to create a localhost sql service
+- Install Dbeaver
+- Create a postgres local instance [[Reference](https://www.microfocus.com/documentation/idol/IDOL_12_0/MediaServer/Guides/html/English/Content/Getting_Started/Configure/_TRN_Set_up_PostgreSQL.htm)]
 - Go to root of the project and open a terminal
 - Use dotnet run to execute the project [[Reference](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)]
