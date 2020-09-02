@@ -43,5 +43,17 @@ namespace Infraestructure.Repository
             context.Close();
             return disc;
         }
+        public async Task ChangeParty(long request, string identifier){
+            string query = string.Format(builder.GetQuery(discokey.changedisco), request, identifier);
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                await command.ExecuteNonQueryAsync();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+            context.Close();
+        }
     }
 }

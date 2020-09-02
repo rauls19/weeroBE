@@ -21,7 +21,6 @@ namespace Core.Business
             this.context =  context;
         }
         public async Task<List<MatchDto>> GetListSwap(string userid, int interested, char genre, int discoid, int offset){
-            //If I only have the identifier, I should get the info from UserRepository
             var match = await repository.GetSwap(userid, interested, genre, discoid, offset);
             return match.ToList().EntityDto();
         }

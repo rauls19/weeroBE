@@ -8,5 +8,6 @@ namespace Infraestructure.Interface
     public interface IDiscoRespository
     {
         Task<ICollection<DiscoEntity>> GetDisco(int maxresults, int offset);
+        Task ChangeParty(long request, string identifier);
     }
 }

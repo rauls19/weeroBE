@@ -7,5 +7,6 @@ namespace Core.Interface
     public interface IDiscoBI
     {
         Task<List<DiscoDto>> GetListDisco(int maxresults, int offset);
+        Task ChangeDiscoParty(long request, string identifier);
     }
 }

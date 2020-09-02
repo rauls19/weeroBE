@@ -78,5 +78,32 @@ namespace Api.Controllers
             }
             return response;
         }
+        [HttpPost]
+        [Route("UpdateProfile")]
+        public async Task UpdateProfile(UserDto request){
+            try{
+                await user.UpdateFieldsProfile(request);
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("UpdateConfiguration")]
+        public async Task UpdateConfig(UserDto request){
+            try{
+                await user.UpdatePersonalInformation(request);
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("UpdatePrivatConfiguration")]
+        public async Task UpdatePrivatConfig(string request, string idem){
+            try{
+                await user.UpdatePrivateInformation(request, idem);
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

@@ -25,19 +25,20 @@ namespace Infraestructure.Repository
                                                             int offset)
         {
             //TODO try catch
-            //TODO check Likes, check matches and after get users
             List<MatchEntity> matchlist = new List<MatchEntity>();
             string query = string.Empty;
             //Males straight
-            if(genre == 'M' && interested == 1)
+            if(genre == 'M' && (interested == 1 || interested == 2))
                 query = string.Format(matchkey.getswaplist, userid, 'F', 0, discoid, userid, userid, userid, offset);
             //Females straight
-            if(genre == 'F' && interested == 0)
+            if(genre == 'F' && (interested == 0 || interested == 2))
                 query = string.Format(matchkey.getswaplist, userid, 'M', 1, discoid, userid, userid, userid, offset);
             //Homosexuals
             if((genre == 'M' && interested == 0) || (genre == 'F' && interested == 1))
                 query = string.Format(matchkey.getswaplist , userid, genre, interested, discoid, userid, userid, userid, offset);
-            //TODO bisexuals
+            //Bisexuals
+            if(interested == 2)
+                query = "( "+query+" ) union ( "+string.Format(matchkey.getswaplist , userid, genre, interested, discoid, userid, userid, userid, offset)+" )";
             await context.OpenAsync();
             var command = context.CreateCommand();
             command.CommandText = query;

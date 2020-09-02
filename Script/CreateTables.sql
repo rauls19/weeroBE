@@ -38,6 +38,7 @@ CREATE TABLE users (
 	age         integer,
 	interested  int  not null default 0,
 	location    varchar(255),
+    city        varchar(100),
 	description varchar(255),
 	mobilephone int unique,
     extension   int,
@@ -57,13 +58,15 @@ CREATE TABLE likes (
     userOrigin	varchar(300),
     userLike	varchar(300)
 );
-CREATE TABLE pictures (
-    id          bigserial,
-    hashid      varchar(300),
-    orderpic     int
-);
+
 CREATE TABLE dislikes (
     id          bigserial,
     userOrigin  varchar(300),
     userLike    varchar(300)
+);
+
+CREATE TABLE pictures (
+    id          bigserial,
+    hashid      varchar(300),
+    orderpic     int
 );

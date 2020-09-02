@@ -5,8 +5,8 @@ namespace Core.Model
 {
     public class DiscoDto
     {
-        public long identifier { get; set; }
-        public string position { get; set; }
+        public long Identifier { get; set; }
+        public string Position { get; set; }
         public string Name{ get; set; }
         public string Street { get; set; }
         public string City { get; set; }

@@ -63,19 +63,23 @@ namespace Infraestructure.Repository
                 while (reader.Read())
                 {
                     user.Id = Convert.ToInt64(reader["id"].ToString());
+                    user.Hashid = hashid;
                     user.Name = reader["name"].ToString();
                     user.Surname = reader["surname"].ToString();
-                    user.Hashid = hashid;
-                    user.Phonenumber = Convert.ToInt32(reader["mobilephone"]);
-                    user.Description = reader["description"].ToString();
-                    user.Disco = reader["disco"].ToString();
                     user.Birthday = reader["birthday"].ToString();
+                    user.Email = reader["email"].ToString();
+                    user.Password = reader["password"].ToString();
                     user.Age = Convert.ToInt32(reader["age"]);
-                    user.Genre = reader["genre"].ToString();
                     user.Interested = Convert.ToInt32(reader["interested"]);
+                    user.Location = reader["location"].ToString();
+                    user.City = reader["city"].ToString();
+                    user.Description = reader["description"].ToString();
                     user.Extension = Convert.ToInt32(reader["extension"]);
+                    user.Phonenumber = Convert.ToInt32(reader["mobilephone"]);
+                    user.Disco = reader["disco"].ToString();
+                    user.Genre = reader["genre"].ToString();
                 }
-                query = string.Format(builder.GetQuery(userkey.getlang), user.Id);
+                query = string.Format(builder.GetQuery(userkey.getlanguages), user.Id);
                 command.CommandText = query;
                 var langreader = await command.ExecuteReaderAsync();
                 List<string> lang = new List<string>();
@@ -127,8 +131,9 @@ namespace Infraestructure.Repository
                     user.Hashid = hashid;
                     user.Description = reader["description"].ToString();
                     user.Age = Convert.ToInt32(reader["age"]);
+                    user.City = reader["city"].ToString();
                 }
-                query = string.Format(builder.GetQuery(userkey.getlang), user.Id);
+                query = string.Format(builder.GetQuery(userkey.getlanguages), user.Id);
                 command.CommandText = query;
                 var langreader = await command.ExecuteReaderAsync();
                 List<string> lang = new List<string>();
@@ -140,5 +145,43 @@ namespace Infraestructure.Repository
             Console.WriteLine(e.Message);
         }
         return user;
+        }
+        public async Task UpdateFields(UserEntity request){
+            string query = string.Format(builder.GetQuery(userkey.updateprofile), request.Description, request.City, request.Birthday, request.Birthday, request.Hashid);
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                await command.ExecuteNonQueryAsync();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+            context.Close();
+            //Fer update idioma
+        }
+        public async Task UpdateConfigPersonalInfo(UserEntity request){
+            string query = string.Format(builder.GetQuery(userkey.personalconfig), request.Name, request.Surname, request.Email, request.Phonenumber, request.Extension, request.Genre, request.Hashid);
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                await command.ExecuteNonQueryAsync();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+            context.Close();
+        }
+        public async Task UpdateConfigPrivateInfo(string request, string idem){
+            string query = string.Format(builder.GetQuery(userkey.privateconfig), request, idem);
+            try{
+                await context.OpenAsync();
+                var command = context.CreateCommand();
+                command.CommandText = query;
+                await command.ExecuteNonQueryAsync();
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+            context.Close();
+        }
     }
 }

@@ -29,5 +29,14 @@ namespace Api.Controllers
             }
             return response;
         }
+        [HttpPost]
+        [Route("ChangeParty")]
+        public async Task ChangeDiscoParty(long identifier, string idem){
+            try{
+                await disco.ChangeDiscoParty(identifier, idem);
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

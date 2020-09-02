@@ -14,6 +14,7 @@ namespace Infraestructure.Entity
         public int Age{ get; set; }
         public int Interested{ get; set; }
         public string Location{ get; set; }
+        public string City { get; set; }
         public string Description{ get; set; }
         public int Extension{ get; set; }
         public int Phonenumber{ get; set; }

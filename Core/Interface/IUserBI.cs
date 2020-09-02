@@ -12,5 +12,8 @@ namespace Core.Interface
         Task UploadImage(string containerName, int order, string image);
         Task<UserDto> GetUser(string request);
         Task<UserProfile> GetProfile(string request);
+        Task UpdateFieldsProfile(UserDto request);
+        Task UpdatePersonalInformation(UserDto request);
+        Task UpdatePrivateInformation(string request, string value);
     }
 }

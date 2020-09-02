@@ -22,6 +22,18 @@
     {
       "identifier" : "Login",
       "query" : "select hashid from users where mobilephone = {0} and password  = '{1}'"
+    },
+    {
+      "identifier" : "UpdateProfile",
+      "query" : "UPDATE users SET description = '{0}', city = '{1}', birthday = '{2}', age = extract ( year from age(timestamp '{3}')) WHERE hashid = '{4}'"
+    },
+    {
+      "identifier" : "PersonalConfig",
+      "query" : "UPDATE users SET name = '{0}', surname = '{1}', email = '{2}', mobilephone = {3}, extension = {4}, genre = '{5}' WHERE hashid = '{6}'"
+    },
+    {
+      "identifier" : "PassChange",
+      "query" : "UPDATE users SET password = '{0}'WHERE hashid = '{1}'"
     }
   ],
   "Match": [{
@@ -48,6 +60,10 @@
   "Disco": [{
       "identifier" : "GetDisco",
       "query": "SELECT id, name, location, Street, City FROM discos limit {0} offset {1}"
+    },
+    {
+      "identifier" : "ChangeDisco",
+      "query" : "UPDATE users SET disco = '{0}'WHERE hashid = '{1}'"
     }
   ]
 }

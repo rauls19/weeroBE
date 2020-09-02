@@ -12,6 +12,9 @@ namespace Infraestructure.Interface
         Task UpdatePartyToGo(int id, string hashid);
         Task UpdatePhoto(string id, int order);
         Task<UserEntity> GetUser(string hashid);
-        Task<UserEntity> GetProfile(string request)
+        Task<UserEntity> GetProfile(string request);
+        Task UpdateFields(UserEntity request);
+        Task UpdateConfigPersonalInfo(UserEntity request);
+        Task UpdateConfigPrivateInfo(string request, string idem);
     }
 }

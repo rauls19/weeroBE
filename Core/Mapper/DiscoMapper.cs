@@ -26,8 +26,8 @@ namespace Core.Mapper
             foreach ( var ent in entity)
             {
                 disclist.Add(new DiscoDto(){
-                    identifier = ent.Id,
-                    position = ent.Location,
+                    Identifier = ent.Id,
+                    Position = ent.Location,
                     Name = ent.Name,
                     Street = ent.Street,
                     City = ent.City,

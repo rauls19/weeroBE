@@ -27,5 +27,10 @@ namespace Core.Business
             //TODO get logo 
             return disco.ToList().EntityDto();
         }
+        public async Task ChangeDiscoParty(long request, string identifier){
+            if(request == 0 || string.IsNullOrEmpty(identifier))
+                throw new Exception("Error #77891243 -- Input Wrong");
+            await repository.ChangeParty(request, identifier);
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace Core.Business
             this.context =  context;
         }
         public async Task<string> SignUp(UserDto request){
+            //Check minimum constraints ,number or something, the basics
             var data = Encoding.UTF8.GetBytes(request.Name+request.Surname);
             byte[] result;
             SHA512 shaM = new SHA512Managed();
@@ -53,7 +54,18 @@ namespace Core.Business
         }
         public async Task<UserProfile> GetProfile(string request){
             var profileuser = await repository.GetProfile(request);
-            return profileuser.EntityDto();
+            return profileuser.EntityProfileDto();
+        }
+        public async Task UpdateFieldsProfile(UserDto request){
+            await repository.UpdateFields(request.DtoProfileEntity());
+        }
+        public async Task UpdatePersonalInformation(UserDto request){
+            await repository.UpdateConfigPersonalInfo(request.EntityPersonalInfoDto());
+        }
+
+        public async Task UpdatePrivateInformation(string request, string idem)
+        {
+            await repository.UpdateConfigPrivateInfo(request, idem);
         }
     }
 }

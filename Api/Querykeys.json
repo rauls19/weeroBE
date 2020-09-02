@@ -5,10 +5,14 @@
     "signup" : "SignUp",
     "getuser" : "GetUser",
     "getlanguages" : "GetLanguages",
-    "login" : "Login"
+    "login" : "Login",
+    "updateProfile" : "UpdateProfile",
+    "personalconfig" : "PersonalConfig",
+    "privateconfig" : "PassChange"
   },
   "DiscoKey": {
-    "getdisco" : "GetDisco"
+    "getdisco" : "GetDisco",
+    "changedisco" : "ChangeDisco"
   },
   "MatchKey":{
     "insertdislike" : "InsertDislike",
